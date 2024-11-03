@@ -1,4 +1,4 @@
-tensorflow
+tensorflow==2.10.0
 keras
 streamlit
 streamlit-option-menu
