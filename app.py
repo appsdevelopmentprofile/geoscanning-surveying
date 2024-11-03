@@ -43,7 +43,7 @@ doc_intelligence_model = tf.keras.models.load_model(model_path)
 # Sidebar navigation
 with st.sidebar:
     selected = option_menu(
-        'Multiple AI Improvements - RFO Central Application',
+        'AI - LiDAR, Photogrammetry, GNSS Positioning, Ground Penetrating Radar (GPR)',
         [
             'Doc Intelligence',
             "Predictive Analytics for Operational Planning",
