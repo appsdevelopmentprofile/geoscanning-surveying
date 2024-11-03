@@ -28,7 +28,7 @@ st.set_page_config(
 
 # Placeholder model setup to replace GCN
 working_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(working_dir, 'saved_models', 'doc_intelligence_model.keras')
+model_path = os.path.join(working_dir, 'doc_intelligence_model.keras')
 
 if not os.path.exists(model_path):
     # Creating a simple placeholder model
