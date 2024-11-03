@@ -21,7 +21,7 @@ import fitz  # PyMuPDF for handling PDFs
 
 # Set page configuration
 st.set_page_config(
-    page_title="Allnorth Consultants - RFO Central Application",
+    page_title="AI - LiDAR, Photogrammetry, GNSS Positioning, Ground Penetrating Radar (GPR)",
     layout="wide",
     page_icon="🧑‍⚕️"
 )
