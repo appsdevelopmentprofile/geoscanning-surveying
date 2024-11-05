@@ -3,5 +3,5 @@ keras
 streamlit
 streamlit-option-menu
 Pillow
-pytesseract
+pytesseract==0.3.13
 PyMuPDF
