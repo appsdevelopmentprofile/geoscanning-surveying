@@ -11,7 +11,6 @@ import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.saving import register_keras_serializable
-import subprocess
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
@@ -59,19 +58,21 @@ with st.sidebar:
 if selected == 'Doc Intelligence':
     st.title('Doc Intelligence with CNNs and GCNs')
 
+    # Display the content of the file
+    file_path = '/mnt/data/module1_CNN_documentation_intelligent_documents_reader (1).ipynb'
+    
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read()
+            st.subheader("Content of the File:")
+            st.text(content)
+    except FileNotFoundError:
+        st.error("File not found. Please ensure the file is in the correct path.")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+
     # File uploader for multiple files
     uploaded_files = st.file_uploader("Upload your documents (images, PDFs)", type=['png', 'jpg', 'jpeg', 'pdf'], accept_multiple_files=True)
-
-    # Function to upload file to Kaggle dataset
-    def upload_to_kaggle(file_path, dataset_slug):
-        try:
-            subprocess.run(
-                ["kaggle", "datasets", "upload", "-p", file_path, "--dir-mode", "zip", "-m", dataset_slug],
-                check=True
-            )
-            return True
-        except subprocess.CalledProcessError:
-            return False
 
     # Process each uploaded file
     if uploaded_files:
@@ -102,13 +103,6 @@ if selected == 'Doc Intelligence':
                 st.subheader("Extracted Text from PDF:")
                 st.write(doc_text if doc_text else "No text found in PDF.")
                 pdf.close()
-
-            # Uploading to Kaggle
-            dataset_slug = "ingjuanrivera/work/collections/14823882"
-            if upload_to_kaggle(temp_file_path, dataset_slug):
-                st.success(f"{uploaded_file.name} uploaded successfully to Kaggle!")
-            else:
-                st.error(f"Failed to upload {uploaded_file.name}.")
 
             os.remove(temp_file_path)
 
