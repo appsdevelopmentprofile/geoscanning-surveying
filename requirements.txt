@@ -5,3 +5,5 @@ streamlit-option-menu
 Pillow
 pytesseract==0.3.13
 PyMuPDF
+fastapi
+uvicorn
