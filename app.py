@@ -1,6 +1,6 @@
+import os
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
-import os
 import tensorflow as tf
 from PIL import Image
 import pytesseract
@@ -10,11 +10,13 @@ import shutil
 
 app = FastAPI()
 
-# Load the pre-trained model
-working_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(working_dir, 'saved_models', 'doc_intelligence_model.keras')
+# Load environment variables
+model_path = os.getenv("MODEL_PATH", "saved_models/doc_intelligence_model.keras")
+temp_dir = os.getenv("TEMP_DIR", tempfile.gettempdir())
+kaggle_username = os.getenv("KAGGLE_USERNAME")
+kaggle_key = os.getenv("KAGGLE_KEY")
 
-# Ensure the model path exists or load the model
+# Load the pre-trained model
 if not os.path.exists(model_path):
     raise HTTPException(status_code=500, detail="Model file not found.")
 else:
@@ -22,9 +24,11 @@ else:
 
 # Helper function to save the uploaded file
 def save_uploaded_file(uploaded_file):
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+    temp_file_path = os.path.join(temp_dir, uploaded_file.filename)
+    with open(temp_file_path, "wb") as temp_file:
         shutil.copyfileobj(uploaded_file.file, temp_file)
-        return temp_file.name
+    return temp_file_path
+
 
 # Endpoint to upload and process files
 @app.post("/upload/")
